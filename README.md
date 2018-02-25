@@ -4,10 +4,11 @@
 Docker Proxy
 ============
 
-Allowing for multiple projects to run side by side on your local machine.  Credits to [jwilder proxy](https://github.com/jwilder/nginx-proxy)
+Allowing for multiple projects to run side by side on your local machine.  
 
-Instructions for setup
-----------------------
+Credits to [jwilder proxy](https://github.com/jwilder/nginx-proxy)
+
+##Instructions for setup
 
 Configure host files, add domains to your hosts files (/etc/hosts) like below, you can add as many as required:
 
@@ -26,13 +27,13 @@ Set up environment:
 - Modify line 11 of docker-compose.yml to match your directory structure 
 - Copy the docker-compose.yml and docker directory from either site-1 or site-2 directory.
 - Modify the following lines in the docker-compose.yml file to match you environment:
-	..- 9
-	..- 11 
-	..- 12 
-	..- 13 
-	..- 14
-	..- 24 
-	..- 25 
+	- 9
+	- 11 
+	- 12 
+	- 13 
+	- 14
+	- 24 
+	- 25 
 
 Note: Lines 13 & 25 _must match_, this will map the fastcgi param to the correct php container, this is very important.
 
