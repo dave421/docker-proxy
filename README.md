@@ -8,7 +8,7 @@ Allowing for multiple projects to run side by side on your local machine.
 
 Credits to [jwilder proxy](https://github.com/jwilder/nginx-proxy)
 
-##Instructions for setup
+## Instructions for setup
 
 Configure host files, add domains to your hosts files (/etc/hosts) like below, you can add as many as required:
 
