@@ -10,7 +10,10 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ~/www/:/var/www/
       - ./nginx/proxy-settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
-
+      # https://github.com/jwilder/nginx-proxy#per-virtual_host-location-default-configuration
+      #- ./docker/nginx/cors.conf:/etc/nginx/vhost.d/portal.com_location
+      #- ./docker/nginx/cors.conf:/etc/nginx/vhost.d/api.com_location
+      - ./nginx/cors.conf:/etc/nginx/conf.d/cors.conf
 
   db:
     image: mysql:5.7
