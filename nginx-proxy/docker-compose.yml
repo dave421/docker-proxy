@@ -8,8 +8,9 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ~/www/:/var/www/
       - ./nginx/proxy-settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf
+      #- ./nginx/uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf
       # https://github.com/jwilder/nginx-proxy#per-virtual_host-location-default-configuration
       #- ./docker/nginx/cors.conf:/etc/nginx/vhost.d/portal.com_location
       #- ./docker/nginx/cors.conf:/etc/nginx/vhost.d/api.com_location

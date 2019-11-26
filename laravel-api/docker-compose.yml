@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+
+  # redis:
+  #   image: redis
+  #   container_name: api-com-redis
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  #   volumes:
+  #     - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  #   ports:
+  #     - "6379:6379"
+
+  web:
+    build: ./docker/nginx/
+    volumes:
+        - ./docker/nginx/default.template:/tmp/default.template
+        - ./docker/nginx/proxy-settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf
+        - ~/Git/api/:/var/www/api.com/
+    environment:
+      - VIRTUAL_HOST=api.com
+      - VIRTUAL_ROOT=/var/www/api.com
+      - FASTCGI_CONTAINER=api-com-php
+      #- REDIS_HOST=api-com-php
+      #- REDIS_PORT=6379
+      #- VIRTUAL_PROTO=fastcgi
+      #- VIRTUAL_PORT=443
+      #- LETSENCRYPT_HOST=api.api.com
+      #- LETSENCRYPT_EMAIL=dave@lightboxdigital.co.uk
+    container_name: api-com-web
+    restart: always
+    depends_on:
+      - php
+    command: /bin/bash -c "envsubst \"`for v in $$(compgen -v);do printf '$${%s} ' $$v;done`'\" < /tmp/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+  php:
+    build: ./docker/php/
+    volumes:
+      - ~/Git/api/:/var/www/api.com/
+    container_name: api-com-php
+    links:
+      - redis
+
+  redis:
+    image: redis:4.0
+    container_name: api-com-redis
+    ports:
+      - "6382:6379"
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
